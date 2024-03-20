@@ -1,12 +1,17 @@
 package {{package}};
-
-{{#imports}}import {{import}};
+{{#imports}}
+import {{import}};
 {{/imports}}
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@FeignClient(name="{{#lambda.camelcase}}{{classname}}{{/lambda.camelcase}}")
+@LoadBalancerClient(name="{{#lambda.camelcase}}{{classname}}{{/lambda.camelcase}}")
 public interface {{classname}} {
 {{#operations}}
 {{#operation}}
