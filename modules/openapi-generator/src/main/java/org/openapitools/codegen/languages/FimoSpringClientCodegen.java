@@ -68,20 +68,8 @@ public class FimoSpringClientCodegen extends DefaultCodegen implements CodegenCo
 
         enablePostProcessFile = true;
 
-
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("pom.mustache", "pom.xml"));
-
-        additionalProperties.putIfAbsent(CodegenConstants.GROUP_ID, DEFAULT_GROUP_ID);
-        additionalProperties.putIfAbsent(CodegenConstants.ARTIFACT_ID, DEFAULT_ARTIFACT_ID);
-        additionalProperties.putIfAbsent(CodegenConstants.ARTIFACT_VERSION, DEFAULT_ARTIFACT_VERSION);
-
-        this.apiPackage = additionalProperties.get(CodegenConstants.GROUP_ID) + "." +
-                artifactIdToPackageName((String) additionalProperties.get(CodegenConstants.ARTIFACT_ID)) + "." + apiPackage;
-        additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
-        this.modelPackage = additionalProperties.get(CodegenConstants.GROUP_ID) + "." +
-                artifactIdToPackageName((String) additionalProperties.get(CodegenConstants.ARTIFACT_ID)) + "." + modelPackage;
-        additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
 
         instantiationTypes.put("array", "ArrayList");
         instantiationTypes.put("set", "HashSet");
@@ -110,6 +98,22 @@ public class FimoSpringClientCodegen extends DefaultCodegen implements CodegenCo
     }
 
     @Override
+    public void processOpts() {
+        super.processOpts();
+
+        additionalProperties.putIfAbsent(CodegenConstants.GROUP_ID, DEFAULT_GROUP_ID);
+        additionalProperties.putIfAbsent(CodegenConstants.ARTIFACT_ID, DEFAULT_ARTIFACT_ID);
+        additionalProperties.putIfAbsent(CodegenConstants.ARTIFACT_VERSION, DEFAULT_ARTIFACT_VERSION);
+
+        this.apiPackage = additionalProperties.get(CodegenConstants.GROUP_ID) + "." +
+                artifactIdToPackageName((String) additionalProperties.get(CodegenConstants.ARTIFACT_ID)) + "." + apiPackage;
+        additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
+        this.modelPackage = additionalProperties.get(CodegenConstants.GROUP_ID) + "." +
+                artifactIdToPackageName((String) additionalProperties.get(CodegenConstants.ARTIFACT_ID)) + "." + modelPackage;
+        additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
+    }
+
+    @Override
     public String getSchemaType(Schema p) {
         String openAPIType = super.getSchemaType(p);
 
@@ -122,11 +126,6 @@ public class FimoSpringClientCodegen extends DefaultCodegen implements CodegenCo
             LOGGER.error("No Type defined for Schema {}", p);
         }
         return toModelName(openAPIType);
-    }
-
-    @Override
-    public void processOpts() {
-        super.processOpts();
     }
 
     @Override
