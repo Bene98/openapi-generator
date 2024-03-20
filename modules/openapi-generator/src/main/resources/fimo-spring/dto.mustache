@@ -1,0 +1,23 @@
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}} {
+
+{{#vars}}
+    {{#isEnum}}
+    {{^isContainer}}
+    {{>modelInnerEnum}}
+    {{/isContainer}}
+    {{#isContainer}}
+    {{#mostInnerItems}}
+    {{>modelInnerEnum}}
+    {{/mostInnerItems}}
+    {{/isContainer}}
+    {{/isEnum}}
+    private {{{datatypeWithEnum}}} {{baseName}};
+{{/vars}}
+}

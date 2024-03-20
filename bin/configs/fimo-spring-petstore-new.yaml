@@ -1,0 +1,6 @@
+generatorName: fimo-spring
+outputDir: samples/client/petstore/fimo/spring
+inputSpec: modules/openapi-generator/src/test/resources/3_0/petstore.yaml
+templateDir: modules/openapi-generator/src/main/resources/fimo-spring
+additionalProperties:
+  hideGenerationTimestamp: "true"
